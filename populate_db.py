@@ -1,13 +1,17 @@
 import pandas as pd 
 from sql import crud, schemas 
+from sqlalchemy.exc import IntegrityError
+
 
 df = pd.read_csv('data/output2.csv')
 
-# continents = df['Continent'].unique()
+continents = df['Continent'].unique()
 
-# for continent in continents:
-#     crud.add_continent(schemas.ContinentBase(continent_name=continent))
-    
+for continent in continents:
+    try:
+        crud.add_continent(schemas.ContinentBase(continent_name=continent))
+    except IntegrityError:
+        pass
 
 countries = df['Country Name'].unique()
 

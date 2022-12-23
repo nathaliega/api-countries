@@ -1,7 +1,13 @@
 from fastapi import FastAPI
 from sql import  *
+import uvicorn
 
 app = FastAPI()
+
+@app.get("/country/{country_name}", response_model=schemas.CountryBase)
+def get_country_by_name(country_name: str):
+    return crud.get_country_by_name(country_name)
+
 
 # crud.test_cont()
 # crud.test()
@@ -22,3 +28,6 @@ app = FastAPI()
 # ))
 
 
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=False, log_level="debug",
+                workers=1, limit_concurrency=1, limit_max_requests=1)
