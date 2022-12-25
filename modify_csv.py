@@ -1,12 +1,12 @@
 import pandas as pd
 import requests
 
-df = pd.read_csv('data/data.csv')
+df = pd.read_csv('data/nans.csv')
 
 countries = df['Country Name'].unique()
 
-df['Continent'] = '' 
 
+df['Continent'] = '' 
 
 for country in countries:
     cts = df[df['Country Name']== country].index

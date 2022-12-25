@@ -1,33 +1,42 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from sql import  *
 import uvicorn
+from fastapi.responses import JSONResponse
+from sqlalchemy.orm import Session
 
 app = FastAPI()
 
-@app.get("/country/{country_name}", response_model=schemas.CountryBase)
-def get_country_by_name(country_name: str):
-    return crud.get_country_by_name(country_name)
+def get_db():
+    db = database.SessionLocal()
+    try:
+        yield db
+    finally: 
+        db.close()
+
+# region country
+
+@app.get("/country/{country_name}", response_model=schemas.ReturnCountry)
+def get_country_by_name(country_name: str, db: Session = Depends(get_db)):
+    try: 
+        return crud.get_country_by_name(country_name.capitalize(), db)
+    except crud.NotFoundException:
+        return JSONResponse(status_code=404, content={"message": "Country not found :("})
+
+# endregion
+
+# @app.get("/country")
 
 
-# crud.test_cont()
-# crud.test()
-# crud.get_country_by_name()
 
-# crud.add_country(schemas.CountryBase(
-#     country_name="Ecuador",
-#     year=2002,
-#     GDP=2,
-#     GDP_growth=0,
-#     GDP_pc=2,
-#     inflation=100,
-#     population=1,
-#     surface=200,
-#     imports=10000,
-#     exports=0,
-#     continent_id=crud.get_continent_by_name("America").continent_id
-# ))
+@app.get("/continent/{continent_name}", response_model=schemas.ReturnContinent)
+def get_countries_by_continent(continent_name: str, db: Session = Depends(get_db)):
+    try: 
+        return crud.get_continent(continent_name.capitalize(), db)
+    except crud.NotFoundException:
+        return JSONResponse(status_code=404, content={"message": "Continent not found :("})
+
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=False, log_level="debug",
-                workers=1, limit_concurrency=1, limit_max_requests=1)
+    uvicorn.run("main:app", host="0.0.0.0", port=4557, reload=True,
+                workers=3)

@@ -11,20 +11,19 @@ class Country(Base):
     country_id = Column(Integer, primary_key = True)
     country_name = Column(String)
     year = Column(Integer)
-    GDP = Column(Float)
-    GDP_growth = Column(Float)
-    GDP_pc = Column(Float)
+    GDP = Column(Float, nullable=True)
+    GDP_growth = Column(Float, nullable=True)
+    GDP_pc = Column(Float, nullable=True)
     inflation = Column(Float, nullable=True)
     population = Column(Float)
-    surface = Column(Float)
-    imports = Column(Float)
-    exports = Column(Float)
+    surface = Column(Float, nullable=True)
+    imports = Column(Float, nullable=True)
+    exports = Column(Float, nullable=True)
     continent_id = Column(Integer, ForeignKey('continents.continent_id'))
+    region_id = Column(Integer, ForeignKey('regions.region_id'))
 
     continent = relationship('Continent', back_populates='countries')
-
-    # reginon_id = relationship('Continents')
-
+    region = relationship('Region', back_populates='countries')
 
 
 class Continent(Base):
@@ -36,10 +35,12 @@ class Continent(Base):
     countries = relationship('Country', back_populates = 'continent')
 
 
-# class Regions(Base):
-#     __tablename__ = 'regions'
+class Region(Base):
+    __tablename__ = 'regions'
 
-#     reginon_id = Column(Float, primary_key = True)
-#     regimonn_name = Column(String)
+    region_id = Column(Integer, primary_key = True)
+    region_name = Column(String, unique=True)
+
+    countries = relationship('Country', back_populates='region')
 
 Base.metadata.create_all(engine)    
