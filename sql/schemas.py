@@ -25,7 +25,7 @@ class CountryCreate(CountryBase):
     # continent = models.Continent
 
 class ContinentBase(BaseModel):
-    continent_name: str 
+    continent_name: str = None
     class Config:  
         orm_mode = True
 

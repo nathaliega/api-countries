@@ -28,6 +28,13 @@ def add_country(country: schemas.CountryCreate, db: Session):
     db.commit()
     return new_country
 
+def country_by_year(country: str, year: int, db: Session):
+    country = db.query(models.Country).filter(models.Country.country_name == country, models.Country.year == year).first()
+    if not country:
+        raise NotFoundException
+    
+    return country
+
 # endregion country
 
 # region continent 
@@ -49,19 +56,15 @@ def get_continent_by_name(continent: str, db: Session):
     return continent
 
 def add_continent(continent: schemas.ContinentBase, db: Session):
-    continent = models.Continent(**continent.dict())
-    db.add(continent)
+    # dict = continent.dict()
+    new_continent = models.Continent(**continent.dict())
+    db.add(new_continent)
     db.commit()
+    return new_continent
 
 # endregion continent
 
 # region region
-
-def add_region(region: schemas.RegionBase, db: Session):
-    region = models.Region(**region.dict())
-    db.add(region)
-    db.commit()
-
 
 def get_region_by_name(region: str, db: Session):
     db_session = database.SessionLocal()
@@ -78,14 +81,10 @@ def get_countries_from_region(region_name: str, db: Session):
     
     return countries
 
+def add_region(region: schemas.RegionBase, db: Session):
+    new_region = models.Region(**region.dict())
+    db.add(new_region)
+    db.commit()
+    return new_region
 
 # endregion region
-
-
-# def add_region(region: schemas.ContinentBase):
-#     db_session = database.SessionLocal()
-
-#     continent = models.Continent(**continent.dict())
-#     db_session.add(continent)
-#     db_session.commit()
-#     db_session.close()

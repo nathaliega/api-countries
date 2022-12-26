@@ -32,6 +32,11 @@ def get_country_by_name(country_name: str, db: Session = Depends(get_db)):
     except crud.NotFoundException:
         return JSONResponse(status_code=404, content={"message": "Country not found :("})
 
+@app.get("/country/{country}/{year}", response_model=schemas.LongCountry)
+def get_country_by_year(country: str, year: int, db: Session = Depends(get_db)):
+    return crud.country_by_year(country, year, db)
+
+
 @app.post("/country/", response_model=schemas.LongCountry)
 def create_country(country: schemas.CountryCreate, db: Session = Depends(get_db)):
     return crud.add_country(country, db)
@@ -39,7 +44,7 @@ def create_country(country: schemas.CountryCreate, db: Session = Depends(get_db)
 
 
 
-# endregion
+# endregion country
 
 
 # region continent
@@ -58,6 +63,11 @@ def get_countries_by_continent(continent_name: str, db: Session = Depends(get_db
         return final_dict
     except crud.NotFoundException:
         return JSONResponse(status_code=404, content={"message": "Continent not found :("})
+
+@app.post("/continent/", response_model=schemas.ContinentBase)
+def add_continent(continent: schemas.ContinentBase, db: Session = Depends(get_db)):
+    return crud.add_continent(continent, db)
+
 
 # endregion continent
 
@@ -79,7 +89,9 @@ def get_countries_by_region(region_name: str, db: Session = Depends(get_db)):
     except crud.NotFoundException:
         return JSONResponse(status_code=404, content={"message": "Region not found :("})
 
-
+@app.post("/region/", response_model=schemas.RegionBase)
+def add_region(region: schemas.RegionBase, db: Session = Depends(get_db)):
+    return crud.add_region(region, db)
 
 # endregion region
 
