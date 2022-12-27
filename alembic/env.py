@@ -7,7 +7,7 @@ from alembic import context
 import os
 
 config = context.config
-config.set_main_option("sqlalchemy.url", os.environ['PSQL_CONN_STR'] + "fastapi")
+config.set_main_option("sqlalchemy.url", os.environ['PSQL_CONN_STR'] + "fastapi_db")
 
 
 if config.config_file_name is not None:
