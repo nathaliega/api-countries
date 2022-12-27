@@ -15,7 +15,7 @@ def get_db():
 
 # region country
 
-@app.get("/country/{country_name}", response_model=schemas.ReturnCountry)
+@app.get("api/country/{country_name}", response_model=schemas.ReturnCountry)
 def get_country_by_name(country_name: str, db: Session = Depends(get_db)):
     try: 
         rows = crud.get_country_by_name(country_name.capitalize(), db)
@@ -32,12 +32,12 @@ def get_country_by_name(country_name: str, db: Session = Depends(get_db)):
     except crud.NotFoundException:
         return JSONResponse(status_code=404, content={"message": "Country not found :("})
 
-@app.get("/country/{country}/{year}", response_model=schemas.LongCountry)
+@app.get("api/country/{country}/{year}", response_model=schemas.LongCountry)
 def get_country_by_year(country: str, year: int, db: Session = Depends(get_db)):
     return crud.country_by_year(country, year, db)
 
 
-@app.post("/country/", response_model=schemas.LongCountry)
+@app.post("api/country/", response_model=schemas.LongCountry)
 def create_country(country: schemas.CountryCreate, db: Session = Depends(get_db)):
     return crud.add_country(country, db)
     
@@ -49,7 +49,7 @@ def create_country(country: schemas.CountryCreate, db: Session = Depends(get_db)
 
 # region continent
 
-@app.get("/continent/{continent_name}", response_model=schemas.ReturnContinent)
+@app.get("api/continent/{continent_name}", response_model=schemas.ReturnContinent)
 def get_countries_by_continent(continent_name: str, db: Session = Depends(get_db)):
     try: 
         countries = crud.get_countries_from_continent(continent_name.capitalize(), db)
@@ -64,7 +64,7 @@ def get_countries_by_continent(continent_name: str, db: Session = Depends(get_db
     except crud.NotFoundException:
         return JSONResponse(status_code=404, content={"message": "Continent not found :("})
 
-@app.post("/continent/", response_model=schemas.ContinentBase)
+@app.post("api/continent/", response_model=schemas.ContinentBase)
 def add_continent(continent: schemas.ContinentBase, db: Session = Depends(get_db)):
     return crud.add_continent(continent, db)
 
@@ -74,7 +74,7 @@ def add_continent(continent: schemas.ContinentBase, db: Session = Depends(get_db
 
 # region region
 
-@app.get("/region/{region_name}", response_model=schemas.ReturnRegion)
+@app.get("api/region/{region_name}", response_model=schemas.ReturnRegion)
 def get_countries_by_region(region_name: str, db: Session = Depends(get_db)):
     try: 
         countries = crud.get_countries_from_region(region_name.capitalize(), db)
@@ -89,7 +89,7 @@ def get_countries_by_region(region_name: str, db: Session = Depends(get_db)):
     except crud.NotFoundException:
         return JSONResponse(status_code=404, content={"message": "Region not found :("})
 
-@app.post("/region/", response_model=schemas.RegionBase)
+@app.post("api/region/", response_model=schemas.RegionBase)
 def add_region(region: schemas.RegionBase, db: Session = Depends(get_db)):
     return crud.add_region(region, db)
 
