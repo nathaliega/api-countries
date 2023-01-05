@@ -5,10 +5,11 @@ from .database import Base, engine
 from sqlalchemy.schema import CreateColumn
 import datetime
 
+
 class Country(Base):
     __tablename__ = "countries"
 
-    country_id = Column(Integer, primary_key = True)
+    country_id = Column(Integer, primary_key=True)
     country_name = Column(String)
     year = Column(Integer)
     GDP = Column(Float, nullable=True)
@@ -29,10 +30,10 @@ class Country(Base):
 class Continent(Base):
     __tablename__ = 'continents'
 
-    continent_id = Column(Integer, primary_key = True)
+    continent_id = Column(Integer, primary_key=True)
     continent_name = Column(String, unique=True)
 
-    countries = relationship('Country', back_populates = 'continent')
+    countries = relationship('Country', back_populates='continent')
 
 
 class Region(Base):
@@ -43,4 +44,5 @@ class Region(Base):
 
     countries = relationship('Country', back_populates='region')
 
-Base.metadata.create_all(engine)    
+
+Base.metadata.create_all(engine)

@@ -11,7 +11,7 @@ def get_db():
     db = database.SessionLocal()
     try:
         yield db
-    finally: 
+    finally:
         db.close()
 
 # region country

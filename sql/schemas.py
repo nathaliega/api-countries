@@ -27,6 +27,20 @@ class CountryCreate(CountryBase):
     region_name: str = None
     # continent = models.Continent
 
+class CountryPopulate(CountryBase):
+    country_name: str =None
+    year: int =None
+    GDP: float = None
+    GDP_growth: float = None
+    GDP_pc: float = None
+    inflation: float = None
+    population: float = None
+    surface: float = None
+    imports: float = None
+    exports: float = None
+    continent_id: int = None
+    region_id: int = None
+    # continent = models.Continent
 
 class ContinentBase(BaseModel):
     continent_name: str = None
