@@ -15,9 +15,10 @@ def get_db():
 
 # region country
 
+
 @app.get("/api/country/{country_name}", response_model=schemas.ReturnCountry)
 def get_country_by_name(country_name: str, db: Session = Depends(get_db)):
-    try: 
+    try:
         rows = crud.get_country_by_name(country_name.capitalize(), db)
         my_dict = {}
         for row in rows:
@@ -32,6 +33,7 @@ def get_country_by_name(country_name: str, db: Session = Depends(get_db)):
     except crud.NotFoundException:
         return JSONResponse(status_code=404, content={"message": "Country not found :("})
 
+
 @app.get("/api/country/{country}/{year}", response_model=schemas.LongCountry)
 def get_country_by_year(country: str, year: int, db: Session = Depends(get_db)):
     return crud.country_by_year(country, year, db)
@@ -40,8 +42,6 @@ def get_country_by_year(country: str, year: int, db: Session = Depends(get_db)):
 @app.post("/api/country/", response_model=schemas.LongCountry)
 def create_country(country: schemas.CountryCreate, db: Session = Depends(get_db)):
     return crud.add_country(country, db)
-    
-
 
 
 # endregion country

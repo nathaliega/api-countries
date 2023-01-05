@@ -5,3 +5,7 @@ alembic/__pycache__/
 
 
 P_Data_Extract_From_World_Development_Indicators (1)/
+
+api_venv/
+
+sql/__pycache__/
