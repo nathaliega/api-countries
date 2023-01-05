@@ -53,4 +53,3 @@ for country in countries:
 
 
 db.close()
-

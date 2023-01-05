@@ -55,6 +55,7 @@ def get_continent_by_name(continent: str, db: Session):
     db_session.close()
     return continent
 
+
 def add_continent(continent: schemas.ContinentBase, db: Session):
     # dict = continent.dict()
     new_continent = models.Continent(**continent.dict())
