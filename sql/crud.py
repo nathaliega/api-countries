@@ -43,7 +43,7 @@ def add_country(country: schemas.CountryCreate, db: Session):
 
 def country_by_year(country: str, year: int, db: Session):
     country = db.query(models.Country).filter(models.Country.country_name ==
-                                              country, models.Country.year ==
+                                              country.capitalize(), models.Country.year ==
                                               year).first()
     if not country:
         raise NotFoundException
