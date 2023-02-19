@@ -1,6 +1,6 @@
 from pydantic import BaseModel
-from . import models
-from typing import List, Dict
+# from . import models
+from typing import Dict
 
 
 class Error(BaseModel):
@@ -13,8 +13,8 @@ class CountryBase(BaseModel):
 
 
 class CountryCreate(CountryBase):
-    country_name: str =None
-    year: int =None
+    country_name: str = None
+    year: int = None
     GDP: float = None
     GDP_growth: float = None
     GDP_pc: float = None
@@ -27,9 +27,10 @@ class CountryCreate(CountryBase):
     region_name: str = None
     # continent = models.Continent
 
+
 class CountryPopulate(CountryBase):
-    country_name: str =None
-    year: int =None
+    country_name: str = None
+    year: int = None
     GDP: float = None
     GDP_growth: float = None
     GDP_pc: float = None
@@ -41,6 +42,7 @@ class CountryPopulate(CountryBase):
     continent_id: int = None
     region_id: int = None
     # continent = models.Continent
+
 
 class ContinentBase(BaseModel):
     continent_name: str = None
@@ -68,7 +70,7 @@ class CountryByYear(CountryBase):
 
 
 class ReturnCountry(CountryBase):
-    country_name: str =None
+    country_name: str = None
     continent: ContinentBase = None
     region: RegionBase = None
     years: Dict[str, CountryByYear] = None
@@ -80,8 +82,8 @@ class ShortCountry(CountryBase):
 
 
 class LongCountry(CountryBase):
-    country_name: str =None
-    year: int =None
+    country_name: str = None
+    year: int = None
     GDP: float = None
     GDP_growth: float = None
     GDP_pc: float = None
@@ -100,6 +102,3 @@ class ReturnContinent(ContinentBase):
 
 class ReturnRegion(RegionBase):
     countries: Dict[str, ShortCountry] = None
-
-
-

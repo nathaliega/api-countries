@@ -1,9 +1,9 @@
-from ast import Str
-from sqlalchemy import Table, Column, Float, String, Date, Boolean, ForeignKey, MetaData, text, Integer
-from sqlalchemy.orm import relationship, backref
+# from ast import Str
+from sqlalchemy import Column, Float, String, ForeignKey, Integer
+from sqlalchemy.orm import relationship
 from .database import Base, engine
-from sqlalchemy.schema import CreateColumn
-import datetime
+# from sqlalchemy.schema import CreateColumn
+# import datetime
 
 
 class Country(Base):
@@ -39,7 +39,7 @@ class Continent(Base):
 class Region(Base):
     __tablename__ = 'regions'
 
-    region_id = Column(Integer, primary_key = True)
+    region_id = Column(Integer, primary_key=True)
     region_name = Column(String, unique=True)
 
     countries = relationship('Country', back_populates='region')
